@@ -1,302 +1,817 @@
 import streamlit as st
-import requests  # Handles sending data to SheetDB
+import requests
 from datetime import datetime
 
-# Set page configuration
-st.set_page_config(page_title="Student Feedback Form", page_icon="📝", layout="centered")
+# ----------------------------------------------------
+# PAGE CONFIGURATION
+# ----------------------------------------------------
+st.set_page_config(
+    page_title="Student Feedback System",
+    page_icon="🎓",
+    layout="wide",
+    initial_sidebar_state="collapsed"
+)
 
-# --- CUSTOM CSS FOR FONTS, CENTERED TITLE, AND GRADIENT BACKGROUND ---
+# ----------------------------------------------------
+# CUSTOM CSS
+# ----------------------------------------------------
 st.markdown("""
-    <style>
-        /* Import a clean modern font */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-        
-        /* Apply the custom font globally */
-        html, body, [data-testid="stAppViewContainer"], .main {
-            font-family: 'Inter', sans-serif !important;
-        }
+<style>
 
-        /* Modern light gradient background (bypasses plain white) */
-        [data-testid="stAppViewContainer"] {
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%) !important;
-        }
-        
-        /* Make form elements stand out beautifully */
-        [data-testid="stHeader"] {
-            background: transparent !important;
-        }
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
-        /* Center-align the main Title */
-        .centered-title {
-            text-align: center !important;
-            font-size: 34px !important;
-            font-weight: 700 !important;
-            color: #1e293b !important;
-            margin-bottom: 5px !important;
-        }
+html, body, [class*="css"]{
+    font-family:'Inter',sans-serif;
+}
 
-        /* Center-align the subtitle */
-        .centered-subtitle {
-            text-align: center !important;
-            font-size: 16px !important;
-            color: #475569 !important;
-            margin-bottom: 25px !important;
-        }
+/* Background */
+.stApp{
+    background:linear-gradient(135deg,#eef4ff 0%,#dce9ff 50%,#f7fbff 100%);
+}
 
-        /* Headings configuration */
-        h2, h3 {
-            font-size: 24px !important;
-            font-weight: 600 !important;
-            color: #334155 !important;
-        }
+/* Hide Streamlit menu */
+#MainMenu{visibility:hidden;}
+footer{visibility:hidden;}
+header{visibility:hidden;}
 
-        /* Make question labels large and highly readable */
-        label p {
-            font-size: 18px !important;
-            font-weight: 600 !important;
-            color: #1e293b !important;
-        }
+/* Hero Banner */
+.hero{
+    background:linear-gradient(135deg,#2563eb,#1e3a8a);
+    padding:35px;
+    border-radius:20px;
+    color:white;
+    box-shadow:0 12px 35px rgba(0,0,0,.18);
+}
 
-        /* Make radio button text options larger */
-        .stRadio div [data-testid="stMarkdownContainer"] p {
-            font-size: 18px !important;
-            font-weight: 500 !important;
-            color: #334155 !important;
-        }
-        
-        /* Make multi-select tag options larger */
-        .stMultiSelect div div [data-testid="stMarkdownContainer"] p {
-            font-size: 16px !important;
-            color: #334155 !important;
-        }
+.hero h1{
+    font-size:48px;
+    margin-bottom:5px;
+    text-align:center;
+}
 
-        /* Make dropdown items larger */
-        .stSelectbox div div div div {
-            font-size: 16px !important;
-        }
-    </style>
+.hero h3{
+    text-align:center;
+    font-weight:400;
+}
+
+.hero p{
+    text-align:center;
+    font-size:18px;
+}
+
+/* Cards */
+
+.card{
+    background:white;
+    padding:25px;
+    border-radius:18px;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+    margin-top:20px;
+}
+
+/* Section Titles */
+
+.section-title{
+    color:#1e3a8a;
+    font-size:30px;
+    font-weight:700;
+    margin-bottom:20px;
+}
+
+/* Labels */
+
+label p{
+    font-size:18px !important;
+    font-weight:600 !important;
+}
+
+/* Buttons */
+
+.stButton>button{
+
+    width:100%;
+
+    background:#2563eb;
+
+    color:white;
+
+    border:none;
+
+    border-radius:12px;
+
+    font-size:20px;
+
+    font-weight:700;
+
+    padding:15px;
+
+    transition:.3s;
+
+}
+
+.stButton>button:hover{
+
+    background:#1d4ed8;
+
+    transform:translateY(-2px);
+
+}
+
+/* Radio */
+
+.stRadio p{
+    font-size:17px;
+}
+
+/* Multiselect */
+
+.stMultiSelect p{
+    font-size:17px;
+}
+
+</style>
 """, unsafe_allow_html=True)
 
-# Centered Title and Welcoming Subtitle
-st.markdown('<div class="centered-title">✨ Class Feedback Form</div>', unsafe_allow_html=True)
-st.markdown('<div class="centered-subtitle">Your feedback helps improve the quality of instructions and helps our teachers grow.</div>', unsafe_allow_html=True)
+# ----------------------------------------------------
+# HERO
+# ----------------------------------------------------
 
-st.write("---")
+st.markdown("""
+<div class='hero'>
 
-# --- SECTION 1: CLASS DETAILS ---
-st.header("📋 1. Class Details")
+<h1>🎓 Student Feedback System</h1>
 
-col1, col2 = st.columns(2)
+<h3>President Carlos P. Garcia TVSFA</h3>
+
+<p>
+Your voice matters.
+Help us improve classroom instruction by sharing your honest feedback.
+All responses are kept confidential.
+</p>
+
+</div>
+
+""", unsafe_allow_html=True)
+
+st.write("")
+
+# Progress
+
+st.progress(0.25, text="Step 1 of 4 • Class Information")
+
+st.write("")
+
+# ----------------------------------------------------
+# SECTION 1
+# ----------------------------------------------------
+
+st.markdown("<div class='card'>", unsafe_allow_html=True)
+
+st.markdown("<div class='section-title'>📋 Class Details</div>", unsafe_allow_html=True)
+
+col1,col2=st.columns(2)
 
 with col1:
-    grade_level = st.selectbox(
-        "Choose your Grade Level:",
-        ["Select Grade Level", "Grade 7", "Grade 8", "Grade 9", "Grade 10"]
+
+    grade_level=st.selectbox(
+        "🎓 Grade Level",
+        [
+            "Select Grade Level",
+            "Grade 7",
+            "Grade 8",
+            "Grade 9",
+            "Grade 10"
+        ]
     )
-    
-    sections_dict = {
-        "Select Grade Level": ["Select a section"],
-        "Grade 7": ["Select a section", "Alcala", "Rizal", "Lopez Jaena", "Mabini", "Gomez"],
-        "Grade 8": ["Select a section", "Punong Bayan", "Cayabyab", "Tamblot", "Aguinaldo", "De Jesus", "Sikatuna"],
-        "Grade 9": ["Select a section", "Dayrit", "Joaquin", "Dagohoy", "Lapu-lapu", "Ponce"],
-        "Grade 10": ["Select a section", "Del Mundo", "Orosa", "Aquino", "Magsaysay", "Garcia"]
+
+    sections_dict={
+        "Select Grade Level":["Select a section"],
+        "Grade 7":["Select a section","Alcala","Rizal","Lopez Jaena","Mabini","Gomez"],
+        "Grade 8":["Select a section","Punong Bayan","Cayabyab","Tamblot","Aguinaldo","De Jesus","Sikatuna"],
+        "Grade 9":["Select a section","Dayrit","Joaquin","Dagohoy","Lapu-lapu","Ponce"],
+        "Grade 10":["Select a section","Del Mundo","Orosa","Aquino","Magsaysay","Garcia"]
     }
-    section = st.selectbox("Choose your Section:", sections_dict[grade_level])
+
+    section=st.selectbox(
+        "🏫 Section",
+        sections_dict[grade_level]
+    )
 
 with col2:
-    subject = st.selectbox("Subject:", ["English"])
-    term = st.selectbox("Choose the Term:", ["Select a term", "Term 1", "Term 2", "Term 3"])
 
-teacher = st.selectbox(
-    "Choose your Teacher:",
+    subject=st.selectbox(
+        "📚 Subject",
+        ["English"]
+    )
+
+    term=st.selectbox(
+        "📅 School Term",
+        [
+            "Select a term",
+            "Term 1",
+            "Term 2",
+            "Term 3"
+        ]
+    )
+
+teacher=st.selectbox(
+    "👨‍🏫 Teacher",
     [
-        "Select a teacher", 
-        "Mr. Abraham C. Gaviola", 
-        "Mr. Apolinario Queroy", 
-        "Ms. Carmel G. Macua", 
-        "Mrs. Josefina A. Singson", 
-        "Mrs. Vionarissa R. Galo", 
-        "Mrs. Ma. Terisa P. Salinas", 
+        "Select a teacher",
+        "Mr. Abraham C. Gaviola",
+        "Mr. Apolinario Queroy",
+        "Ms. Carmel G. Macua",
+        "Mrs. Josefina A. Singson",
+        "Mrs. Vionarissa R. Galo",
+        "Mrs. Ma. Terisa P. Salinas",
         "Mrs. Ken Jared B. Advincula"
     ]
 )
 
-# --- SHORTENED TOPIC SECTIONS ---
-st.write("---")
-st.subheader("📖 Choose the Lesson/Topic discussed:")
+st.markdown("</div>",unsafe_allow_html=True)
+
+st.write("")
+# ==========================================================
+# STEP 2
+# ==========================================================
+
+st.progress(0.50, text="Step 2 of 4 • Lesson & Classroom Experience")
+
+st.write("")
+
+# ==========================================================
+# TOPIC
+# ==========================================================
+
+st.markdown("<div class='card'>", unsafe_allow_html=True)
+
+st.markdown(
+    "<div class='section-title'>📖 Lesson / Topic Discussed</div>",
+    unsafe_allow_html=True
+)
 
 topics_dict = {
-    "Select Grade Level": ["Please select a Grade Level above first."],
-    "Grade 7": [
+
+    "Select Grade Level":[
+        "Please select a Grade Level first."
+    ],
+
+    "Grade 7":[
         "Conflict (Character vs. Character/Society/Nature)",
-        "Structural Elements & Devices (Character, Diction, POV)",
-        "Contextual Analysis (Biographical, Historical, Sociocultural)",
-        "Core Meaning (Universal Truths & Philosophies)",
-        "Composition Process (Pre-writing, Drafting, Revision)",
+        "Structural Elements & Devices",
+        "Contextual Analysis",
+        "Core Meaning",
+        "Composition Process",
         "Final Output (Original Poem or Prose)"
     ],
-    "Grade 8": [
+
+    "Grade 8":[
         "Conflict (Character vs. Self/Character/Society/Nature)",
-        "Structural Elements & Devices (Character, Diction, POV)",
-        "Contextual Analysis (Biographical, Historical, Sociocultural)",
-        "Core Meaning (Universal Truths & Philosophies)",
-        "Composition Process (Pre-writing, Drafting, Revision)",
+        "Structural Elements & Devices",
+        "Contextual Analysis",
+        "Core Meaning",
+        "Composition Process",
         "Final Output (Original Poem or Prose)"
     ],
-    "Grade 9": [
+
+    "Grade 9":[
         "Conflict (Character vs. Self/Character/Society/Nature)",
         "Structural Elements (Linear, Flashback, Parallel Plots)",
-        "Dramatic & Film Elements (Spectacle, Dialogue, Music)",
-        "Devices & Semiotics (Rhyme, Diction, POV, Sign/Referent)",
-        "Contextual Analysis (Biographical, Historical, Sociocultural)",
-        "Linguistic Context (Deictic, Co-text, Collocation)",
+        "Dramatic & Film Elements",
+        "Devices & Semiotics",
+        "Contextual Analysis",
+        "Linguistic Context",
         "Psychological Context",
-        "Core Meaning (Universal Truths & Philosophies)",
-        "Composition Process (Pre-writing, Drafting, Revision)",
+        "Core Meaning",
+        "Composition Process",
         "Final Output (Original One-Act Play Script)"
     ],
-    "Grade 10": [
+
+    "Grade 10":[
         "Conflict (Character vs. Self/Character/Society/Nature)",
-        "Structural Elements (Linear, Flashback, Parallel, Episodic, In Medias Res)",
-        "Devices & Semiotics (Spectacle, Dialogue, Rhyme, Diction, POV)",
-        "Contextual Analysis (Biographical, Historical, Sociocultural)",
-        "Linguistic Context (Deictic Time/Place/Situation, Co-text)",
+        "Structural Elements",
+        "Devices & Semiotics",
+        "Contextual Analysis",
+        "Linguistic Context",
         "Psychological Context",
-        "Core Meaning (Universal Truths & Philosophies)",
-        "Composition Process (Pre-writing, Drafting, Revision)",
-        "Final Output (Original Short Film/Multimodal Text)"
+        "Core Meaning",
+        "Composition Process",
+        "Final Output (Original Short Film)"
     ]
 }
 
-topic = st.radio("Select one:", topics_dict[grade_level], index=0)
+topic = st.radio(
 
-st.write("---")
+    "Which lesson was discussed today?",
 
-# --- SECTION 2: CLASSROOM EXPERIENCE ---
-st.header("💡 2. Your Classroom Experience")
-st.caption("Select all that apply.")
+    topics_dict[grade_level],
+
+    horizontal=False
+
+)
+
+st.markdown("</div>", unsafe_allow_html=True)
+
+st.write("")
+
+# ==========================================================
+# CLASSROOM EXPERIENCE
+# ==========================================================
+
+st.markdown("<div class='card'>", unsafe_allow_html=True)
+
+st.markdown(
+    "<div class='section-title'>💡 Classroom Experience</div>",
+    unsafe_allow_html=True
+)
+
+st.info(
+    "✅ Select all statements that describe your classroom experience."
+)
+
+# --------------------------
+# Best Teaching Practices
+# --------------------------
 
 best_practices = st.multiselect(
-    "🌟 Best Teaching Practices observed:",
+
+    "🌟 Best Teaching Practices",
+
     [
+
         "Explained lessons clearly",
+
         "Made learning easy to understand",
+
         "Encouraged everyone to participate",
+
         "Listened closely to student ideas",
+
         "Asked interesting questions",
+
         "Used fun and engaging activities",
+
         "Used easy-to-relate examples",
+
         "Gave helpful feedback",
+
         "Treated students with respect",
+
         "Created a welcoming classroom",
+
         "Managed the classroom well",
+
         "Used learning materials effectively",
-        "Kept the class well engaged",
+
+        "Kept students engaged",
+
         "Helped with difficult concepts",
-        "Reviewed the lesson at the end"
+
+        "Reviewed the lesson before dismissal"
+
     ]
+
 )
+
+st.write("")
+
+# --------------------------
+# Positive Behaviour
+# --------------------------
 
 positive_feedback = st.multiselect(
-    "❤️ Positive Teacher Behavior:",
+
+    "❤️ Positive Teacher Behaviour",
+
     [
+
         "Kind and approachable",
+
         "Treats everyone fairly",
+
         "Respectful to all students",
-        "Patient when teaching",
+
+        "Patient while teaching",
+
         "Friendly and welcoming",
+
         "Listens to student concerns",
-        "Encourages and motivates",
+
+        "Encourages students",
+
         "Calm and professional",
-        "Well-prepared for class",
+
+        "Well prepared",
+
         "Comes to class on time",
-        "Enthusiastic while teaching",
-        "Creates a safe environment",
+
+        "Shows enthusiasm",
+
+        "Creates a safe classroom",
+
         "Values student opinions",
-        "Good classroom role model",
+
+        "Good role model",
+
         "Shows care and concern"
+
     ]
+
 )
 
-st.write("---")
+# ----------------------------------------------------
+# QUICK RATING
+# ----------------------------------------------------
 
-# --- SECTION 3: IDEAS FOR IMPROVEMENT ---
-st.header("🚀 3. Ideas for Growth")
+st.write("")
 
-suggestions = st.multiselect(
-    "📖 Suggestions for the lesson:",
+st.markdown("### 😊 How enjoyable was today's class?")
+
+quick_rating = st.radio(
+
+    "",
+
     [
-        "Encourage more student participation",
-        "Give more time to answer questions",
-        "Use more interactive activities",
-        "Include more group work activities",
-        "Use more real-life examples",
-        "Ask more challenging questions",
-        "Check understanding more often",
-        "Use more visual aids or technology",
-        "Give more opportunities to share ideas",
-        "Provide reflection time before ending"
-    ]
+
+        "😞 Poor",
+
+        "😐 Fair",
+
+        "🙂 Good",
+
+        "😄 Very Good",
+
+        "🤩 Excellent"
+
+    ],
+
+    horizontal=True
+
 )
 
-improvements = st.multiselect(
-    "🛠️ Suggestions for teacher interaction:",
-    [
-        "Be more approachable to students",
-        "Encourage quieter students to join",
-        "Give equal attention to everyone",
-        "Provide more positive encouragement",
-        "Listen more to ideas and concerns",
-        "Speak more clearly and confidently",
-        "Interact more during activities",
-        "Be more patient with questions",
-        "Create more expression opportunities",
-        "Maintain a respectful atmosphere"
-    ]
+st.markdown("</div>", unsafe_allow_html=True)
+
+st.write("")
+# ==========================================================
+# STEP 3
+# ==========================================================
+
+st.progress(0.75, text="Step 3 of 4 • Suggestions & Overall Rating")
+
+st.write("")
+
+# ==========================================================
+# SUGGESTIONS
+# ==========================================================
+
+st.markdown("<div class='card'>", unsafe_allow_html=True)
+
+st.markdown(
+    "<div class='section-title'>🚀 Help Us Improve</div>",
+    unsafe_allow_html=True
 )
 
-st.write("---")
-
-# --- SECTION 4: OVERALL RATING ---
-st.header("⭐ 4. Overall Rating")
-rating = st.select_slider(
-    "Slide to pick your score (10 is the highest!):",
-    options=list(range(1, 11)),
-    value=10
+st.info(
+    "Your suggestions will help teachers improve future lessons."
 )
 
-st.write("---")
+col1, col2 = st.columns(2)
 
-# --- SUBMIT BUTTON ---
-if st.button("🚀 Submit My Feedback", use_container_width=True):
-    if grade_level == "Select Grade Level" or section == "Select a section" or term == "Select a term" or teacher == "Select a teacher":
-        st.error("Oops! Please make sure Grade Level, Section, Term, and Teacher are all selected before submitting.")
+# -------------------------------------------------
+# Lesson Suggestions
+# -------------------------------------------------
+
+with col1:
+
+    suggestions = st.multiselect(
+
+        "📚 Suggestions for the Lesson",
+
+        [
+
+            "Encourage more student participation",
+
+            "Give more time to answer questions",
+
+            "Use more interactive activities",
+
+            "Include more group activities",
+
+            "Use more real-life examples",
+
+            "Ask more higher-order questions",
+
+            "Check understanding more often",
+
+            "Use more technology",
+
+            "Give more opportunities to share ideas",
+
+            "Provide reflection before dismissal"
+
+        ]
+
+    )
+
+# -------------------------------------------------
+# Teacher Interaction
+# -------------------------------------------------
+
+with col2:
+
+    improvements = st.multiselect(
+
+        "👨‍🏫 Suggestions for Teacher Interaction",
+
+        [
+
+            "Be more approachable",
+
+            "Encourage quieter students",
+
+            "Give equal attention to everyone",
+
+            "Provide more encouragement",
+
+            "Listen more to student concerns",
+
+            "Speak more clearly",
+
+            "Interact more during activities",
+
+            "Be more patient",
+
+            "Create more opportunities for expression",
+
+            "Maintain a respectful classroom"
+
+        ]
+
+    )
+
+st.write("")
+
+# -------------------------------------------------
+# Additional Comment
+# -------------------------------------------------
+
+comment = st.text_area(
+
+    "💬 Additional Comment (Optional)",
+
+    placeholder="Write any additional feedback or suggestions here..."
+
+)
+
+st.markdown("</div>", unsafe_allow_html=True)
+
+st.write("")
+
+# ==========================================================
+# OVERALL RATING
+# ==========================================================
+
+st.markdown("<div class='card'>", unsafe_allow_html=True)
+
+st.markdown(
+    "<div class='section-title'>⭐ Overall Evaluation</div>",
+    unsafe_allow_html=True
+)
+
+st.write("### Overall Rating")
+
+rating = st.slider(
+
+    "Move the slider",
+
+    min_value=1,
+
+    max_value=10,
+
+    value=10,
+
+    help="10 = Excellent"
+
+)
+
+# Rating message
+
+if rating >= 9:
+
+    st.success("🌟 Excellent! Thank you for recognizing quality teaching.")
+
+elif rating >= 7:
+
+    st.info("😊 Thank you! We're glad you had a positive learning experience.")
+
+elif rating >= 5:
+
+    st.warning("🙂 Thank you. We'll continue improving.")
+
+else:
+
+    st.error("💙 Thank you for your honesty. Your feedback will help us improve.")
+
+st.write("")
+
+# ==========================================================
+# REVIEW BEFORE SUBMITTING
+# ==========================================================
+
+with st.expander("📋 Review Your Responses Before Submitting"):
+
+    st.markdown(f"**Grade Level:** {grade_level}")
+
+    st.markdown(f"**Section:** {section}")
+
+    st.markdown(f"**Teacher:** {teacher}")
+
+    st.markdown(f"**Subject:** {subject}")
+
+    st.markdown(f"**Term:** {term}")
+
+    st.markdown(f"**Lesson:** {topic}")
+
+    st.markdown(f"**Overall Rating:** ⭐ {rating}/10")
+
+st.markdown("</div>", unsafe_allow_html=True)
+
+st.write("")
+
+# ==========================================================
+# SUBMIT SECTION
+# ==========================================================
+
+st.markdown("<div class='card'>", unsafe_allow_html=True)
+
+st.markdown(
+    "<div class='section-title'>✅ Submit Feedback</div>",
+    unsafe_allow_html=True
+)
+
+st.caption(
+    "Please review your responses carefully before clicking Submit."
+)
+
+submit = st.button(
+
+    "🚀 Submit My Feedback",
+
+    use_container_width=True
+
+)
+
+st.markdown("</div>", unsafe_allow_html=True)
+
+st.write("")
+# ==========================================================
+# STEP 4
+# ==========================================================
+
+st.progress(1.0, text="Step 4 of 4 • Ready to Submit")
+
+if submit:
+
+    # ---------------------------------------
+    # VALIDATION
+    # ---------------------------------------
+
+    if (
+        grade_level == "Select Grade Level"
+        or section == "Select a section"
+        or term == "Select a term"
+        or teacher == "Select a teacher"
+    ):
+
+        st.error("⚠ Please complete all required fields before submitting.")
+
     else:
+
         row_data = {
-            "data": [{
-                "Timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                "Grade Level": grade_level,
-                "Section": section,
-                "Subject": subject,
-                "Term": term,
-                "Teacher": teacher,
-                "Topic": topic,
-                "Best Practices": ", ".join(best_practices),
-                "Positive Feedback": ", ".join(positive_feedback),
-                "Suggestions": ", ".join(suggestions),
-                "Improvements": ", ".join(improvements),
-                "Rating": str(rating)
+
+            "data":[{
+
+                "Timestamp":datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+
+                "Grade Level":grade_level,
+
+                "Section":section,
+
+                "Subject":subject,
+
+                "Term":term,
+
+                "Teacher":teacher,
+
+                "Topic":topic,
+
+                "Best Practices":", ".join(best_practices),
+
+                "Positive Feedback":", ".join(positive_feedback),
+
+                "Suggestions":", ".join(suggestions),
+
+                "Improvements":", ".join(improvements),
+
+                "Additional Comment":comment,
+
+                "Quick Rating":quick_rating,
+
+                "Rating":rating
+
             }]
+
         }
-        
+
         sheetdb_url = "https://sheetdb.io/api/v1/0kfovvs2st6yz"
-        
-        try:
-            response = requests.post(sheetdb_url, json=row_data)
-            if response.status_code == 201:
-                st.balloons()
-                st.success("🎉 Thank you for honestly giving feedback! Your responses have been saved safely.")
-            else:
-                st.error("Something went wrong saving your data. Please check your headers.")
-        except Exception as e:
-            st.error("Could not connect to the sheet right now. Please try again later.")
+
+        with st.spinner("Submitting your feedback..."):
+
+            try:
+
+                response = requests.post(
+                    sheetdb_url,
+                    json=row_data,
+                    timeout=15
+                )
+
+                if response.status_code == 201:
+
+                    st.balloons()
+
+                    st.success("🎉 Feedback submitted successfully!")
+
+                    st.markdown("---")
+
+                    st.markdown(
+                        """
+                        # 💙 Thank You!
+
+                        Your feedback has been recorded successfully.
+
+                        Your responses help our teachers improve their classroom instruction.
+
+                        We appreciate your honesty and participation.
+                        """
+                    )
+
+                    st.info(
+                        "You may now safely close this page."
+                    )
+
+                else:
+
+                    st.error(
+                        "Unable to save your feedback.\n\nPlease try again."
+                    )
+
+            except requests.exceptions.Timeout:
+
+                st.error(
+                    "⏰ The server took too long to respond."
+                )
+
+            except requests.exceptions.ConnectionError:
+
+                st.error(
+                    "📡 Unable to connect to the internet."
+                )
+
+            except Exception as e:
+
+                st.error(f"Unexpected error:\n{e}")
+
+# ==========================================================
+# FOOTER
+# ==========================================================
+
+st.markdown("<br><br>", unsafe_allow_html=True)
+
+st.markdown(
+"""
+<hr>
+
+<div style='text-align:center;color:#64748b;font-size:15px;'>
+
+<b>Student Feedback System</b><br>
+
+President Carlos P. Garcia Technical Vocational School of Fisheries and Arts
+
+<br><br>
+
+Developed by
+
+<b>Mr. Abraham C. Gaviola</b>
+
+<br>
+
+English Teacher III
+
+<br><br>
+
+© 2026 All Rights Reserved
+
+</div>
+""",
+unsafe_allow_html=True
+)
