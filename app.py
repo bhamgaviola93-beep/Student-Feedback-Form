@@ -1,4 +1,6 @@
 import streamlit as st
+import requests  # Handles sending data to SheetDB
+from datetime import datetime
 
 # Set a student-friendly page configuration
 st.set_page_config(page_title="Student Feedback Form", page_icon="📝", layout="centered")
@@ -16,7 +18,6 @@ st.write("---")
 st.header("📋 1. Class Details")
 st.caption("Tell us which class and teacher you are giving feedback for.")
 
-# Using columns to make the dropdowns look neat side-by-side
 col1, col2 = st.columns(2)
 
 with col1:
@@ -137,20 +138,11 @@ st.write("---")
 st.header("⭐ 4. Overall Rating")
 st.write("On a scale of 1 to 10, how would you rate your overall experience with this teacher?")
 
-# Using select_slider to make the 1-10 choice look clean and satisfying to slide
 rating = st.select_slider(
     "Slide to pick your score (10 is the highest!):",
     options=list(range(1, 11)),
     value=10
 )
-
-# Friendly score indicator text
-if rating >= 9:
-    st.info(f"Awesome! You rated this a {rating}/10. 🙌")
-elif rating >= 7:
-    st.info(f"Great! You rated this a {rating}/10. 👍")
-else:
-    st.info(f"Thank you. You rated this a {rating}/10. Keep the feedback coming!")
 
 st.write("---")
 
@@ -159,5 +151,31 @@ if st.button("🚀 Submit My Feedback", use_container_width=True):
     if subject == "Select a subject" or term == "Select a term" or teacher == "Select a teacher":
         st.error("Oops! Please make sure to select a Subject, Term, and Teacher before submitting.")
     else:
-        st.balloons()  # Adds a fun celebration animation for the student!
-        st.success("🎉 Thank you for honestly giving feedback! Your responses have been saved safely.")
+        # Match data mapping to your Google Sheet column headers
+        row_data = {
+            "data": [{
+                "Timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                "Subject": subject,
+                "Term": term,
+                "Teacher": teacher,
+                "Topic": topic,
+                "Best Practices": ", ".join(best_practices),
+                "Positive Feedback": ", ".join(positive_feedback),
+                "Suggestions": ", ".join(suggestions),
+                "Improvements": ", ".join(improvements),
+                "Rating": str(rating)
+            }]
+        }
+        
+        # Your custom SheetDB endpoint
+        sheetdb_url = "https://sheetdb.io/api/v1/0kfovvs2st6yz"
+        
+        try:
+            response = requests.post(sheetdb_url, json=row_data)
+            if response.status_code == 201:
+                st.balloons()  # Fun celebration animation!
+                st.success("🎉 Thank you for honestly giving feedback! Your responses have been saved safely.")
+            else:
+                st.error("Something went wrong saving your data. Please check your headers.")
+        except Exception as e:
+            st.error("Could not connect to the sheet right now. Please try again later.")
