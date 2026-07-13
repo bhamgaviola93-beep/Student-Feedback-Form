@@ -62,11 +62,13 @@ teacher = st.selectbox(
     ]
 )
 
-# 6. Dynamic Topics dictionary based on Grade Level
+# --- TOPIC SECTION (Optimized with Radio Buttons for Mobile Text Wrapping) ---
+st.write("---")
+st.subheader("📖 Choose the Lesson/Topic discussed:")
+
 topics_dict = {
-    "Select Grade Level": ["Please select a Grade Level first"],
+    "Select Grade Level": ["Please select a Grade Level above first."],
     "Grade 7": [
-        "Select a topic",
         "Evaluating Literary Texts: Structural Context (Conflict) - Character vs. Character/Society/Nature",
         "Evaluating Literary Texts: Structural Context (Elements & Devices) - Character, Rhyme, Diction, Figures of Speech, POV, Organic Unity",
         "Evaluating Literary Texts: Contextual Analysis - Biographical, Historical, Sociocultural Context",
@@ -75,7 +77,6 @@ topics_dict = {
         "Publishing an Original Literary Text: Final Output (Original Poem or Prose)"
     ],
     "Grade 8": [
-        "Select a topic",
         "Evaluating Literary Texts: Structural Context (Conflict) - Character vs. Character/Society/Nature/Self",
         "Evaluating Literary Texts: Structural Context (Elements & Devices) - Character, Rhyme, Diction, Figures of Speech, POV, Organic Unity",
         "Evaluating Literary Texts: Contextual Analysis - Biographical, Historical, Sociocultural Contexts",
@@ -84,7 +85,6 @@ topics_dict = {
         "Publishing an Original Literary Text: Final Output (Original Poem or Prose)"
     ],
     "Grade 9": [
-        "Select a topic",
         "Evaluating Literary Texts: Structural Context (Conflict) - Character vs. Character/Society/Nature/Self",
         "Evaluating Literary Texts: Structural Context (Elements & Devices) - Plot Structures (Linear, Flashback, Parallel Plot)",
         "Evaluating Literary Texts: Structural Context (Elements & Devices) - Dramatic/Film Elements (Spectacle, Dialogue, Music)",
@@ -97,7 +97,6 @@ topics_dict = {
         "Publishing an Original Literary Text: Final Output (Original Script for a One-Act Play)"
     ],
     "Grade 10": [
-        "Select a topic",
         "Evaluating Literary Texts: Structural Context (Conflict) - Character vs. Character/Society/Nature/Self",
         "Evaluating Literary Texts: Structural Context (Elements & Devices) - Plot Structures (Linear, Flashback, Parallel, Episodic, In Medias Res)",
         "Evaluating Literary Texts: Structural Context (Elements & Devices) - Spectacle, Dialogue, Music, Rhyme, Diction, Figures of Speech, POV, Organic Unity, Semiotics",
@@ -110,7 +109,8 @@ topics_dict = {
     ]
 }
 
-topic = st.selectbox("Choose the Lesson/Topic discussed:", topics_dict[grade_level])
+# We use st.radio instead of selectbox so text wraps perfectly into multiple lines on phones
+topic = st.radio("Select one:", topics_dict[grade_level], index=0)
 
 st.write("---")
 
@@ -215,8 +215,8 @@ st.write("---")
 # --- SUBMIT BUTTON ---
 if st.button("🚀 Submit My Feedback", use_container_width=True):
     # Field Validation
-    if grade_level == "Select Grade Level" or section == "Select a section" or term == "Select a term" or teacher == "Select a teacher" or topic in ["Select a topic", "Please select a Grade Level first"]:
-        st.error("Oops! Please make sure Grade Level, Section, Term, Teacher, and Topic are all selected before submitting.")
+    if grade_level == "Select Grade Level" or section == "Select a section" or term == "Select a term" or teacher == "Select a teacher" or grade_level == "Select Grade Level":
+        st.error("Oops! Please make sure Grade Level, Section, Term, and Teacher are all selected before submitting.")
     else:
         # Match data mapping to your Google Sheet column headers
         row_data = {
