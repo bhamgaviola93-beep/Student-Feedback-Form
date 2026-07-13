@@ -248,6 +248,160 @@ SUCCESS BOX
 </style>
 
 """, unsafe_allow_html=True)
+with st.sidebar:
+
+    st.title("🎓 Student Feedback")
+
+    st.markdown("---")
+
+    st.info("""
+
+**Estimated Time**
+
+🕒 3 minutes
+
+""")
+
+    st.success("""
+
+🔒 Your responses are confidential.
+
+""")
+
+    st.markdown("---")
+
+    st.caption("Developed by")
+
+    st.write("**Mr. Abraham C. Gaviola**")
+    st.markdown("""
+
+<div class="hero">
+
+<h1>🎓 Student Feedback System</h1>
+
+<h3>President Carlos P. Garcia TVSFA</h3>
+
+<p>
+
+Help us improve classroom instruction by sharing your honest feedback.
+
+Your responses are confidential.
+
+</p>
+
+</div>
+
+""", unsafe_allow_html=True)
+    st.write("")
+
+st.progress(25, text="Step 1 of 4 • Class Information")
+
+st.write("")
+with st.container(border=True):
+
+    st.subheader("📋 Class Details")
+
+    st.caption("Please provide your class information.")
+
+    col1,col2 = st.columns(2)
+
+    with col1:
+
+        grade_level = st.selectbox(
+
+            "🎓 Grade Level",
+
+            [
+
+                "Select Grade Level",
+
+                "Grade 7",
+
+                "Grade 8",
+
+                "Grade 9",
+
+                "Grade 10"
+
+            ]
+
+        )
+
+        sections_dict = {
+
+            "Select Grade Level":["Select a section"],
+
+            "Grade 7":["Select a section","Alcala","Rizal","Lopez Jaena","Mabini","Gomez"],
+
+            "Grade 8":["Select a section","Punong Bayan","Cayabyab","Tamblot","Aguinaldo","De Jesus","Sikatuna"],
+
+            "Grade 9":["Select a section","Dayrit","Joaquin","Dagohoy","Lapu-lapu","Ponce"],
+
+            "Grade 10":["Select a section","Del Mundo","Orosa","Aquino","Magsaysay","Garcia"]
+
+        }
+
+        section = st.selectbox(
+
+            "🏫 Section",
+
+            sections_dict[grade_level]
+
+        )
+
+    with col2:
+
+        subject = st.selectbox(
+
+            "📚 Subject",
+
+            ["English"]
+
+        )
+
+        term = st.selectbox(
+
+            "📅 School Term",
+
+            [
+
+                "Select a term",
+
+                "Term 1",
+
+                "Term 2",
+
+                "Term 3"
+
+            ]
+
+        )
+
+    teacher = st.selectbox(
+
+        "👨‍🏫 Teacher",
+
+        [
+
+            "Select a teacher",
+
+            "Mr. Abraham C. Gaviola",
+
+            "Mr. Apolinario Queroy",
+
+            "Ms. Carmel G. Macua",
+
+            "Mrs. Josefina A. Singson",
+
+            "Mrs. Vionarissa R. Galo",
+
+            "Mrs. Ma. Terisa P. Salinas",
+
+            "Mrs. Ken Jared B. Advincula"
+
+        ]
+
+    )
 # =====================================================
 # STEP 2 OF 4
 # =====================================================
