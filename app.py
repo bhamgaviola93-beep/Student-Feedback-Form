@@ -21,30 +21,96 @@ st.caption("Tell us which class and teacher you are giving feedback for.")
 col1, col2 = st.columns(2)
 
 with col1:
-    subject = st.selectbox(
-        "Choose your Subject:",
-        ["Select a subject", "English 7", "English 8", "English 9", "English 10"]
+    # 1. Grade Level Selection
+    grade_level = st.selectbox(
+        "Choose your Grade Level:",
+        ["Select Grade Level", "Grade 7", "Grade 8", "Grade 9", "Grade 10"]
     )
+    
+    # 2. Dynamic Section Selection based on Grade Level
+    sections_dict = {
+        "Select Grade Level": ["Select a section"],
+        "Grade 7": ["Select a section", "Alcala", "Rizal", "Lopez Jaena", "Mabini", "Gomez"],
+        "Grade 8": ["Select a section", "Punong Bayan", "Cayabyab", "Tamblot", "Aguinaldo", "De Jesus", "Sikatuna"],
+        "Grade 9": ["Select a section", "Dayrit", "Joaquin", "Dagohoy", "Lapu-lapu", "Ponce"],
+        "Grade 10": ["Select a section", "Del Mundo", "Orosa", "Aquino", "Magsaysay", "Garcia"]
+    }
+    section = st.selectbox("Choose your Section:", sections_dict[grade_level])
+
+with col2:
+    # 3. Subject locked to English
+    subject = st.selectbox("Subject:", ["English"])
+    
+    # 4. Term Selection
     term = st.selectbox(
         "Choose the Term:",
         ["Select a term", "Term 1", "Term 2", "Term 3"]
     )
 
-with col2:
-    teacher = st.selectbox(
-        "Choose your Teacher:",
-        [
-            "Select a teacher", 
-            "Mr. Abraham C. Gaviola", 
-            "Mr. Apolinario Queroy", 
-            "Ms. Carmel G. Macua", 
-            "Mrs. Josefina A. Singson", 
-            "Mrs. Vionarissa R. Galo", 
-            "Mrs. Ma. Terisa P. Salinas", 
-            "Mrs. Ken Jared B. Advincula"
-        ]
-    )
-    topic = st.text_input("What was the Lesson/Topic? (Optional)", placeholder="e.g., Poetry, Grammar, Essay Writing...")
+# 5. Teacher Selection
+teacher = st.selectbox(
+    "Choose your Teacher:",
+    [
+        "Select a teacher", 
+        "Mr. Abraham C. Gaviola", 
+        "Mr. Apolinario Queroy", 
+        "Ms. Carmel G. Macua", 
+        "Mrs. Josefina A. Singson", 
+        "Mrs. Vionarissa R. Galo", 
+        "Mrs. Ma. Terisa P. Salinas", 
+        "Mrs. Ken Jared B. Advincula"
+    ]
+)
+
+# 6. Dynamic Topics dictionary based on Grade Level
+topics_dict = {
+    "Select Grade Level": ["Please select a Grade Level first"],
+    "Grade 7": [
+        "Select a topic",
+        "Evaluating Literary Texts: Structural Context (Conflict) - Character vs. Character/Society/Nature",
+        "Evaluating Literary Texts: Structural Context (Elements & Devices) - Character, Rhyme, Diction, Figures of Speech, POV, Organic Unity",
+        "Evaluating Literary Texts: Contextual Analysis - Biographical, Historical, Sociocultural Context",
+        "Evaluating Literary Texts: Core Meaning - Maxims, Universal Truths, and Philosophies",
+        "Publishing an Original Literary Text: Composition Process (Pre-writing, Drafting, Revision)",
+        "Publishing an Original Literary Text: Final Output (Original Poem or Prose)"
+    ],
+    "Grade 8": [
+        "Select a topic",
+        "Evaluating Literary Texts: Structural Context (Conflict) - Character vs. Character/Society/Nature/Self",
+        "Evaluating Literary Texts: Structural Context (Elements & Devices) - Character, Rhyme, Diction, Figures of Speech, POV, Organic Unity",
+        "Evaluating Literary Texts: Contextual Analysis - Biographical, Historical, Sociocultural Contexts",
+        "Evaluating Literary Texts: Core Meaning - Maxims, Universal Truths, and Philosophies",
+        "Publishing an Original Literary Text: Composition Process (Pre-writing, Drafting, Revision)",
+        "Publishing an Original Literary Text: Final Output (Original Poem or Prose)"
+    ],
+    "Grade 9": [
+        "Select a topic",
+        "Evaluating Literary Texts: Structural Context (Conflict) - Character vs. Character/Society/Nature/Self",
+        "Evaluating Literary Texts: Structural Context (Elements & Devices) - Plot Structures (Linear, Flashback, Parallel Plot)",
+        "Evaluating Literary Texts: Structural Context (Elements & Devices) - Dramatic/Film Elements (Spectacle, Dialogue, Music)",
+        "Evaluating Literary Texts: Structural Context (Elements & Devices) - Rhyme, Diction, Figures of Speech, POV, Organic Unity, Semiotics",
+        "Evaluating Literary Texts: Contextual Analysis - Biographical, Historical, Sociocultural Contexts",
+        "Evaluating Literary Texts: Contextual Analysis - Linguistic Context (Deictic, Co-text, Collocation)",
+        "Evaluating Literary Texts: Contextual Analysis - Psychological Context",
+        "Evaluating Literary Texts: Core Meaning - Maxims, Universal Truths, and Philosophies",
+        "Publishing an Original Literary Text: Composition Process (Pre-writing, Drafting, Revision)",
+        "Publishing an Original Literary Text: Final Output (Original Script for a One-Act Play)"
+    ],
+    "Grade 10": [
+        "Select a topic",
+        "Evaluating Literary Texts: Structural Context (Conflict) - Character vs. Character/Society/Nature/Self",
+        "Evaluating Literary Texts: Structural Context (Elements & Devices) - Plot Structures (Linear, Flashback, Parallel, Episodic, In Medias Res)",
+        "Evaluating Literary Texts: Structural Context (Elements & Devices) - Spectacle, Dialogue, Music, Rhyme, Diction, Figures of Speech, POV, Organic Unity, Semiotics",
+        "Evaluating Literary Texts: Contextual Analysis - Biographical, Historical, Sociocultural Contexts",
+        "Evaluating Literary Texts: Contextual Analysis - Linguistic Context (Deictic Time/Place/Situation, Co-text, Collocation)",
+        "Evaluating Literary Texts: Contextual Analysis - Psychological Context",
+        "Evaluating Literary Texts: Core Meaning - Maxims, Universal Truths, and Philosophies",
+        "Publishing an Original Literary Text: Composition Process (Pre-writing, Drafting, Revision)",
+        "Publishing an Original Literary Text: Final Output (Original Short Film/Multimodal Text)"
+    ]
+}
+
+topic = st.selectbox("Choose the Lesson/Topic discussed:", topics_dict[grade_level])
 
 st.write("---")
 
@@ -148,13 +214,16 @@ st.write("---")
 
 # --- SUBMIT BUTTON ---
 if st.button("🚀 Submit My Feedback", use_container_width=True):
-    if subject == "Select a subject" or term == "Select a term" or teacher == "Select a teacher":
-        st.error("Oops! Please make sure to select a Subject, Term, and Teacher before submitting.")
+    # Field Validation
+    if grade_level == "Select Grade Level" or section == "Select a section" or term == "Select a term" or teacher == "Select a teacher" or topic in ["Select a topic", "Please select a Grade Level first"]:
+        st.error("Oops! Please make sure Grade Level, Section, Term, Teacher, and Topic are all selected before submitting.")
     else:
         # Match data mapping to your Google Sheet column headers
         row_data = {
             "data": [{
                 "Timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                "Grade Level": grade_level,
+                "Section": section,
                 "Subject": subject,
                 "Term": term,
                 "Teacher": teacher,
