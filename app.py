@@ -620,196 +620,66 @@ with st.container(border=True):
 
         suggestions = st.multiselect(
 
-            "📚 Suggestions for the Lesson",
+    "📚 Suggestions for the Lesson",
 
-            [
+    [
 
-                "Encourage more student participation",
+        "Encourage more student participation",
+        "Give more time to answer questions",
+        "Use more interactive activities",
+        "Include more group work",
+        "Use more real-life examples",
+        "Ask more higher-order thinking questions",
+        "Check students' understanding more often",
+        "Use more educational technology",
+        "Provide more practice activities",
+        "Give more examples before activities"
 
-                "Give more time to answer questions",
+    ]
 
-                "Use more interactive activities",
-
-                "Include more group work",
-
-                "Use more real-life examples",
-
-                "Ask more higher-order thinking questions",
-
-                "
-                # =====================================================
-# STEP 4 OF 4
-# SUBMIT FEEDBACK
-# =====================================================
-
-st.write("")
-st.progress(100, text="Step 4 of 4 • Submit Feedback")
-st.write("")
-
-with st.container(border=True):
-
-    st.subheader("✅ Submit Your Feedback")
-
-    st.caption(
-        "Please review your responses. Once submitted, your feedback will be saved."
-    )
-
-    submit = st.button(
-        "🚀 Submit My Feedback",
-        use_container_width=True
-    )
-
-# =====================================================
-# SAVE TO SHEETDB
-# =====================================================
-
-if submit:
-
-    # Validation
-    if (
-        grade_level == "Select Grade Level"
-        or section == "Select a section"
-        or term == "Select a term"
-        or teacher == "Select a teacher"
-    ):
-
-        st.error(
-            "⚠ Please complete the Grade Level, Section, Term, and Teacher fields."
-        )
-
-    else:
-
-        row_data = {
-
-            "data":[{
-
-                "Timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-
-                "Grade Level": grade_level,
-
-                "Section": section,
-
-                "Subject": subject,
-
-                "Term": term,
-
-                "Teacher": teacher,
-
-                "Topic": topic,
-
-                "Best Practices": ", ".join(best_practices),
-
-                "Positive Feedback": ", ".join(positive_feedback),
-
-                "Suggestions": ", ".join(suggestions),
-
-                "Improvements": ", ".join(improvements),
-
-                "Additional Comment": comment,
-
-                "Quick Rating": quick_rating,
-
-                "Overall Rating": rating
-
-            }]
-        }
-
-        SHEETDB_URL = "https://sheetdb.io/api/v1/0kfovvs2st6yz"
-
-        with st.spinner("Saving your feedback..."):
-
-            try:
-
-                response = requests.post(
-                    SHEETDB_URL,
-                    json=row_data,
-                    timeout=15
-                )
-
-                if response.status_code == 201:
-
-                    st.balloons()
-
-                    st.success(
-                        "🎉 Thank you! Your feedback has been submitted successfully."
-                    )
-
-                    st.markdown(
-                        """
-                        ### 💙 Your opinion matters!
-
-                        Every response helps our teachers improve instruction and
-                        create a better learning experience for everyone.
-
-                        Thank you for taking the time to complete this survey.
-                        """
-                    )
-
-                    st.info(
-                        "You may now close this page."
-                    )
-
-                else:
-
-                    st.error(
-                        "❌ Unable to save your feedback. Please try again."
-                    )
-
-            except requests.exceptions.Timeout:
-
-                st.error(
-                    "⏱ The server took too long to respond."
-                )
-
-            except requests.exceptions.ConnectionError:
-
-                st.error(
-                    "📡 Unable to connect to the internet."
-                )
-
-            except Exception as e:
-
-                st.error(f"Unexpected error: {e}")
-
-# =====================================================
-# FOOTER
-# =====================================================
-
-st.write("")
-st.write("")
-st.divider()
-
-col1, col2, col3 = st.columns([1,2,1])
+)
 
 with col2:
 
-    st.markdown(
-        """
-        <div style="text-align:center; color:#64748B;">
+    improvements = st.multiselect(
 
-        <h4>🎓 Student Feedback System</h4>
+        "👨‍🏫 Teacher Interaction",
 
-        President Carlos P. Garcia Technical Vocational School
-        of Fisheries and Arts
+        [
 
-        <br><br>
+            "Speak more clearly",
+            "Give equal attention to all students",
+            "Encourage shy students",
+            "Provide more feedback",
+            "Be more approachable",
+            "Interact more with students",
+            "Provide more motivation",
+            "Maintain classroom discipline",
+            "Explain difficult topics more slowly",
+            "Continue the good work"
 
-        Developed by
+        ]
 
-        <br>
-
-        <b>Mr. Abraham C. Gaviola</b>
-
-        <br>
-
-        English Teacher III
-
-        <br><br>
-
-        © 2026 All Rights Reserved
-
-        </div>
-        """,
-        unsafe_allow_html=True
     )
-                
+
+comment = st.text_area(
+
+    "💬 Additional Comments",
+
+    placeholder="Write your suggestions here (optional)..."
+
+)
+
+st.markdown("### ⭐ Overall Rating")
+
+rating = st.slider(
+
+    "Rate today's lesson",
+
+    1,
+
+    10,
+
+    10
+
+)
