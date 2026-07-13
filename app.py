@@ -5,19 +5,60 @@ from datetime import datetime
 # Set page configuration
 st.set_page_config(page_title="Student Feedback Form", page_icon="📝", layout="centered")
 
-# --- CUSTOM CSS FOR LARGE, READABLE TEXT ---
+# --- CUSTOM CSS FOR CUSTOM FONTS, CLASSROOM BACKGROUND, AND LARGE TEXT ---
 st.markdown("""
     <style>
-        /* Make radio button text larger */
+        /* Import a clean modern font */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        /* Apply the custom font globally */
+        html, body, [data-testid="stAppViewContainer"], .main {
+            font-family: 'Inter', sans-serif !important;
+        }
+
+        /* Custom subtle modern gradient background matching a clean form theme */
+        [data-testid="stAppViewContainer"] {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%) !important;
+        }
+        
+        /* Make form elements stand out beautifully */
+        [data-testid="stHeader"] {
+            background: transparent !important;
+        }
+
+        /* Large, prominent text for headings */
+        h1 {
+            font-size: 32px !important;
+            font-weight: 700 !important;
+            color: #1e293b !important;
+        }
+        h2, h3 {
+            font-size: 24px !important;
+            font-weight: 600 !important;
+            color: #334155 !important;
+        }
+
+        /* Make question labels and dropdown items large and highly readable */
+        label p {
+            font-size: 18px !important;
+            font-weight: 600 !important;
+            color: #1e293b !important;
+        }
+
+        /* Make radio button text options larger */
         .stRadio div [data-testid="stMarkdownContainer"] p {
             font-size: 18px !important;
-            font-weight: 500;
+            font-weight: 500 !important;
+            color: #334155 !important;
         }
-        /* Make multi-select option text larger */
+        
+        /* Make multi-select tag options larger */
         .stMultiSelect div div [data-testid="stMarkdownContainer"] p {
             font-size: 16px !important;
+            color: #334155 !important;
         }
-        /* Make dropdown menu items larger */
+
+        /* Make dropdown items larger */
         .stSelectbox div div div div {
             font-size: 16px !important;
         }
@@ -26,7 +67,7 @@ st.markdown("""
 
 # Friendly welcoming header
 st.title("✨ Class Feedback Form")
-st.markdown("Your feedback helps improve the quality of instructions and helps our teachers grow.")
+st.markdown("<p style='font-size:16px; color:#475569;'>Your feedback helps improve the quality of instructions and helps our teachers grow.</p>", unsafe_allow_html=True)
 
 st.write("---")
 
@@ -75,43 +116,43 @@ st.subheader("📖 Choose the Lesson/Topic discussed:")
 topics_dict = {
     "Select Grade Level": ["Please select a Grade Level above first."],
     "Grade 7": [
-        "Evaluating Literary Texts: Conflict (Character vs. Character/Society/Nature)",
-        "Evaluating Literary Texts: Structural Elements & Devices (Character, Diction, POV)",
-        "Evaluating Literary Texts: Contextual Analysis (Biographical, Historical, Sociocultural)",
-        "Evaluating Literary Texts: Core Meaning (Universal Truths & Philosophies)",
-        "Publishing Text: Composition Process (Pre-writing, Drafting, Revision)",
-        "Publishing Text: Final Output (Original Poem or Prose)"
+        "Conflict (Character vs. Character/Society/Nature)",
+        "Structural Elements & Devices (Character, Diction, POV)",
+        "Contextual Analysis (Biographical, Historical, Sociocultural)",
+        "Core Meaning (Universal Truths & Philosophies)",
+        "Composition Process (Pre-writing, Drafting, Revision)",
+        "Final Output (Original Poem or Prose)"
     ],
     "Grade 8": [
-        "Evaluating Literary Texts: Conflict (Character vs. Self/Character/Society/Nature)",
-        "Evaluating Literary Texts: Structural Elements & Devices (Character, Diction, POV)",
-        "Evaluating Literary Texts: Contextual Analysis (Biographical, Historical, Sociocultural)",
-        "Evaluating Literary Texts: Core Meaning (Universal Truths & Philosophies)",
-        "Publishing Text: Composition Process (Pre-writing, Drafting, Revision)",
-        "Publishing Text: Final Output (Original Poem or Prose)"
+        "Conflict (Character vs. Self/Character/Society/Nature)",
+        "Structural Elements & Devices (Character, Diction, POV)",
+        "Contextual Analysis (Biographical, Historical, Sociocultural)",
+        "Core Meaning (Universal Truths & Philosophies)",
+        "Composition Process (Pre-writing, Drafting, Revision)",
+        "Final Output (Original Poem or Prose)"
     ],
     "Grade 9": [
-        "Evaluating Literary Texts: Conflict (Character vs. Self/Character/Society/Nature)",
-        "Evaluating Literary Texts: Structural Elements (Linear, Flashback, Parallel Plots)",
-        "Evaluating Literary Texts: Dramatic & Film Elements (Spectacle, Dialogue, Music)",
-        "Evaluating Literary Texts: Devices & Semiotics (Rhyme, Diction, POV, Sign/Referent)",
-        "Evaluating Literary Texts: Contextual Analysis (Biographical, Historical, Sociocultural)",
-        "Evaluating Literary Texts: Linguistic Context (Deictic, Co-text, Collocation)",
-        "Evaluating Literary Texts: Psychological Context",
-        "Evaluating Literary Texts: Core Meaning (Universal Truths & Philosophies)",
-        "Publishing Text: Composition Process (Pre-writing, Drafting, Revision)",
-        "Publishing Text: Final Output (Original One-Act Play Script)"
+        "Conflict (Character vs. Self/Character/Society/Nature)",
+        "Structural Elements (Linear, Flashback, Parallel Plots)",
+        "Dramatic & Film Elements (Spectacle, Dialogue, Music)",
+        "Devices & Semiotics (Rhyme, Diction, POV, Sign/Referent)",
+        "Contextual Analysis (Biographical, Historical, Sociocultural)",
+        "Linguistic Context (Deictic, Co-text, Collocation)",
+        "Psychological Context",
+        "Core Meaning (Universal Truths & Philosophies)",
+        "Composition Process (Pre-writing, Drafting, Revision)",
+        "Final Output (Original One-Act Play Script)"
     ],
     "Grade 10": [
-        "Evaluating Literary Texts: Conflict (Character vs. Self/Character/Society/Nature)",
-        "Evaluating Literary Texts: Structural Elements (Linear, Flashback, Parallel, Episodic, In Medias Res)",
-        "Evaluating Literary Texts: Devices & Semiotics (Spectacle, Dialogue, Rhyme, Diction, POV)",
-        "Evaluating Literary Texts: Contextual Analysis (Biographical, Historical, Sociocultural)",
-        "Evaluating Literary Texts: Linguistic Context (Deictic Time/Place/Situation, Co-text)",
-        "Evaluating Literary Texts: Psychological Context",
-        "Evaluating Literary Texts: Core Meaning (Universal Truths & Philosophies)",
-        "Publishing Text: Composition Process (Pre-writing, Drafting, Revision)",
-        "Publishing Text: Final Output (Original Short Film/Multimodal Text)"
+        "Conflict (Character vs. Self/Character/Society/Nature)",
+        "Structural Elements (Linear, Flashback, Parallel, Episodic, In Medias Res)",
+        "Devices & Semiotics (Spectacle, Dialogue, Rhyme, Diction, POV)",
+        "Contextual Analysis (Biographical, Historical, Sociocultural)",
+        "Linguistic Context (Deictic Time/Place/Situation, Co-text)",
+        "Psychological Context",
+        "Core Meaning (Universal Truths & Philosophies)",
+        "Composition Process (Pre-writing, Drafting, Revision)",
+        "Final Output (Original Short Film/Multimodal Text)"
     ]
 }
 
@@ -119,7 +160,7 @@ topic = st.radio("Select one:", topics_dict[grade_level], index=0)
 
 st.write("---")
 
-# --- SECTION 2: CLASSROOM EXPERIENCE (SHORTENED PHRASES) ---
+# --- SECTION 2: CLASSROOM EXPERIENCE ---
 st.header("💡 2. Your Classroom Experience")
 st.caption("Select all that apply.")
 
@@ -167,7 +208,7 @@ positive_feedback = st.multiselect(
 
 st.write("---")
 
-# --- SECTION 3: IDEAS FOR IMPROVEMENT (SHORTENED PHRASES) ---
+# --- SECTION 3: IDEAS FOR IMPROVEMENT ---
 st.header("🚀 3. Ideas for Growth")
 
 suggestions = st.multiselect(
