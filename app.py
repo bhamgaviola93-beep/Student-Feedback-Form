@@ -5,7 +5,7 @@ from datetime import datetime
 # Set page configuration
 st.set_page_config(page_title="Student Feedback Form", page_icon="📝", layout="centered")
 
-# --- CUSTOM CSS FOR CUSTOM FONTS, CLASSROOM BACKGROUND, AND LARGE TEXT ---
+# --- CUSTOM CSS FOR FONTS, CENTERED TITLE, AND GRADIENT BACKGROUND ---
 st.markdown("""
     <style>
         /* Import a clean modern font */
@@ -16,7 +16,7 @@ st.markdown("""
             font-family: 'Inter', sans-serif !important;
         }
 
-        /* Custom subtle modern gradient background matching a clean form theme */
+        /* Modern light gradient background (bypasses plain white) */
         [data-testid="stAppViewContainer"] {
             background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%) !important;
         }
@@ -26,19 +26,31 @@ st.markdown("""
             background: transparent !important;
         }
 
-        /* Large, prominent text for headings */
-        h1 {
-            font-size: 32px !important;
+        /* Center-align the main Title */
+        .centered-title {
+            text-align: center !important;
+            font-size: 34px !important;
             font-weight: 700 !important;
             color: #1e293b !important;
+            margin-bottom: 5px !important;
         }
+
+        /* Center-align the subtitle */
+        .centered-subtitle {
+            text-align: center !important;
+            font-size: 16px !important;
+            color: #475569 !important;
+            margin-bottom: 25px !important;
+        }
+
+        /* Headings configuration */
         h2, h3 {
             font-size: 24px !important;
             font-weight: 600 !important;
             color: #334155 !important;
         }
 
-        /* Make question labels and dropdown items large and highly readable */
+        /* Make question labels large and highly readable */
         label p {
             font-size: 18px !important;
             font-weight: 600 !important;
@@ -65,9 +77,9 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Friendly welcoming header
-st.title("✨ Class Feedback Form")
-st.markdown("<p style='font-size:16px; color:#475569;'>Your feedback helps improve the quality of instructions and helps our teachers grow.</p>", unsafe_allow_html=True)
+# Centered Title and Welcoming Subtitle
+st.markdown('<div class="centered-title">✨ Class Feedback Form</div>', unsafe_allow_html=True)
+st.markdown('<div class="centered-subtitle">Your feedback helps improve the quality of instructions and helps our teachers grow.</div>', unsafe_allow_html=True)
 
 st.write("---")
 
