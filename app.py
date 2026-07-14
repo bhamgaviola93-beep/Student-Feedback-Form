@@ -34,8 +34,7 @@ html, body, [class*="css"]{
 }
 
 .stApp {
-    background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
-}
+    background: linear-gradient(135deg, #112211, #1A331E);
 }
 
 /* Hide Streamlit default menu */
@@ -55,18 +54,16 @@ visibility:hidden;
 /* -----------------------------
 HEADINGS
 ------------------------------ */
-
-h1,h2,h3,h4,h5,h6{
-
-    color:#1E3A8A;
+h1, h2, h3, h4, h5, h6 {
+    color: #FFFFFF !important;
+}    color:#1E3A8A;
 
 }
-
-/* -----------------------------
-LABELS
------------------------------- */
-
-label{
+label, label p, .stWidgetLabel p {
+    color: #FFFFFF !important;
+    font-size: 17px !important;
+    font-weight: 600 !important;
+}
 
     color:#1E293B !important;
 
