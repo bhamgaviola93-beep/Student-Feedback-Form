@@ -64,19 +64,15 @@ SELECT BOXES
 .stSelectbox div[data-baseweb="select"]{
 
     background:white !important;
-
+.stSelectbox div[data-baseweb="select"]{
+    background:#1E3A8A !important;
     border-radius:12px;
-
-    border:1px solid #CBD5E1;
-
+    border:1px solid #60A5FA;
 }
 
 .stSelectbox *{
-
-    color:#1E293B !important;
-
+    color:#FFFFFF !important;
 }
-
 /* -----------------------------
 RADIOS
 ------------------------------ */
