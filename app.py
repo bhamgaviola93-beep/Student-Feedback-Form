@@ -220,6 +220,11 @@ SUCCESS BOX
 """, unsafe_allow_html=True)
 with st.sidebar:
 
+    col1, col2, col3 = st.columns([1,2,1])
+
+    with col2:
+        st.image("school_logo.jpg", width=120)
+
     st.title("🎓 Student Feedback")
 
     st.markdown("---")
