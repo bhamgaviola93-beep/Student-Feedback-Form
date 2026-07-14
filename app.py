@@ -33,10 +33,9 @@ html, body, [class*="css"]{
 
 }
 
-.stApp{
-
-    background:linear-gradient(135deg,#eef5ff,#dfeaff);
-
+.stApp {
+    background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+}
 }
 
 /* Hide Streamlit default menu */
