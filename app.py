@@ -32,9 +32,9 @@ html, body, [class*="css"]{
     font-family:'Inter',sans-serif;
 
 }
-
 .stApp {
-    background: linear-gradient(135deg, #059669, #10B981);
+    background: linear-gradient(135deg, #1E3A8A, #3B82F6);
+}
 }
 div[data-testid="stSidebarUserContent"], .stBorderedContainer {
     background-color: rgba(255, 255, 255, 0.1) !important;
