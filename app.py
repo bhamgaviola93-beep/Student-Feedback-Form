@@ -34,7 +34,11 @@ html, body, [class*="css"]{
 }
 
 .stApp {
-    background: linear-gradient(135deg, #112211, #1A331E);
+    background: linear-gradient(135deg, #059669, #10B981);
+}
+div[data-testid="stSidebarUserContent"], .stBorderedContainer {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
 }
 
 /* Hide Streamlit default menu */
