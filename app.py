@@ -53,16 +53,6 @@ h1, h2, h3, h4, h5, h6, label, label p, .stWidgetLabel p {
     font-size: 26px !important;
     font-weight: 700 !important;
 }
-label p{color:#1E293B !important; }
-/* Crisp, extra-large headings and input labels */
-h1, h2, h3, h4, h5, h6, label, label p, .stWidgetLabel p {
-    color: #FFFFFF !important;
-    font-size: 26px !important;
-    font-weight: 700 !important;
-}
-}
-label, label p, .stWidgetLabel p {
-    color: #FFFFFF !important;
     font-size: 17px !important;
     font-weight: 600 !important;
 }
