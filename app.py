@@ -54,10 +54,11 @@ visibility:hidden;
 footer{
 visibility:hidden;
 }
-
-/* -----------------------------
-HEADINGS
------------------------------- */
+label, label p, .stWidgetLabel p {
+    color: #FFFFFF !important; 
+    font-size: 22px !important;
+    font-weight: 600 !important;
+}
 h1, h2, h3, h4, h5, h6 {
     color: #FFFFFF !important;
 }    color:#1E3A8A;
