@@ -48,15 +48,12 @@ visibility:hidden;
 
 /* Crisp, extra-large headings and input labels */
 /* Force all headings and input labels to be large and white */
+/* Force all headings and input labels to be large and white */
 h1, h2, h3, h4, h5, h6, label, label p, .stWidgetLabel p {
     color: #FFFFFF !important;
     font-size: 22px !important;
     font-weight: 600 !important;
 }
-
-label p{
-
-    color:#1E293B !important;
 
 }
 
@@ -422,7 +419,7 @@ with st.container(border=True):
 
         "Grade 9": [
             "Conflict (Character vs. Self/Character/Society/Nature)",
-            "Structural Elements (Linear, Flashback, Parallel Plots)",
+            "Structural Elements (Episodic, Parallel Plots)",
             "Dramatic & Film Elements",
             "Devices & Semiotics",
             "Contextual Analysis",
