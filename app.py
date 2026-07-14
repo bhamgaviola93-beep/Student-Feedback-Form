@@ -617,69 +617,54 @@ with st.container(border=True):
     col1, col2 = st.columns(2)
 
     with col1:
+   # =====================================================
+    # STEP 3 OF 4: SUGGESTIONS & OVERALL RATING
+    # =====================================================
+    st.write("")
+    st.progress(75, text="Step 3 of 4 • Suggestions & Overall Rating")
+    st.write("")
 
-        suggestions = st.multiselect(
+    with st.container(border=True):
+        st.subheader("🚀 Suggestions for Improvement")
+        st.write("Help us improve future lessons and classroom experiences.")
 
-    "📚 Suggestions for the Lesson",
+        col1, col2 = st.columns(2)
 
-    [
+        with col1:
+            suggestions = st.multiselect(
+                "📚 Suggestions for the Lesson",
+                [
+                    "Encourage more student participation",
+                    "Give more time to answer questions",
+                    "Use more interactive activities",
+                    "Include more group work",
+                    "Use more real-life examples",
+                    "Ask more higher-order thinking questions",
+                    "Check students' understanding more often",
+                    "Use more educational technology",
+                    "Provide more practice activities",
+                    "Give more examples before activities"
+                ]
+            )
 
-        "Encourage more student participation",
-        "Give more time to answer questions",
-        "Use more interactive activities",
-        "Include more group work",
-        "Use more real-life examples",
-        "Ask more higher-order thinking questions",
-        "Check students' understanding more often",
-        "Use more educational technology",
-        "Provide more practice activities",
-        "Give more examples before activities"
+        with col2:
+            improvements = st.multiselect(
+                "👨‍🏫 Teacher Interaction",
+                [
+                    "Speak more clearly",
+                    "Give equal attention to all students",
+                    "Encourage shy students",
+                    "Provide more feedback",
+                    "Be more approachable",
+                    "Interact more with students",
+                    "Provide more motivation",
+                    "Maintain classroom discipline",
+                    "Explain difficult topics more slowly",
+                    "Continue the good work"
+                ]
+            )
 
-    ]
-
-)
-
-with col2:
-
-    improvements = st.multiselect(
-
-        "👨‍🏫 Teacher Interaction",
-
-        [
-
-            "Speak more clearly",
-            "Give equal attention to all students",
-            "Encourage shy students",
-            "Provide more feedback",
-            "Be more approachable",
-            "Interact more with students",
-            "Provide more motivation",
-            "Maintain classroom discipline",
-            "Explain difficult topics more slowly",
-            "Continue the good work"
-
-        ]
-
-    )
-
-comment = st.text_area(
-
-    "💬 Additional Comments",
-
-    placeholder="Write your suggestions here (optional)..."
-
-)
-
-st.markdown("### ⭐ Overall Rating")
-
-rating = st.slider(
-
-    "Rate today's lesson",
-
-    1,
-
-    10,
-
-    10
-
-)
+        st.text_area(
+            "💬 Additional Comments",
+            placeholder="Write your suggestions here (optional)..."
+        )     
