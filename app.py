@@ -615,8 +615,7 @@ with st.container(border=True):
     st.caption("Help us improve future lessons and classroom experiences.")
 
     col1, col2 = st.columns(2)
-
-    with col1:
+with col1:
    # =====================================================
     # STEP 3 OF 4: SUGGESTIONS & OVERALL RATING
     # =====================================================
