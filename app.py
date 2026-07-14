@@ -47,22 +47,25 @@ div[data-testid="stSidebarUserContent"], .stBorderedContainer {
 visibility:hidden;
 }
 
-header{
-visibility:hidden;
-}
-
-footer{
-visibility:hidden;
-}
-label, label p, .stWidgetLabel p {
-    color: #FFFFFF !important; 
-    font-size: 22px !important;
-    font-weight: 600 !important;
-}
 h1, h2, h3, h4, h5, h6 {
+ color: #FFFFFF !important;
+}
+   color:#1E3A8A; }
+label, label p, .stWidgetLabel p {
+ color: #FFFFFF !important;
+ font-size: 17px !important;
+ font-weight: 600 !important;
+}
+color:#1E293B !important;
+font-size:17px !important;
+font-weight:600 !important; }
+label p{color:#1E293B !important; }
+/* Crisp, extra-large headings and input labels */
+h1, h2, h3, h4, h5, h6, label, label p, .stWidgetLabel p {
     color: #FFFFFF !important;
-}    color:#1E3A8A;
-
+    font-size: 26px !important;
+    font-weight: 700 !important;
+}
 }
 label, label p, .stWidgetLabel p {
     color: #FFFFFF !important;
