@@ -2,50 +2,314 @@ import streamlit as st
 import requests
 from datetime import datetime
 
+# =====================================================
+# PAGE CONFIGURATION
+# =====================================================
+
 st.set_page_config(
-    page_title="Student Feedback System",
+    page_title="English 9 Student Feedback",
     page_icon="🎓",
     layout="wide",
     initial_sidebar_state="expanded"
 )
+
+# =====================================================
+# CUSTOM CSS
+# =====================================================
+
+st.markdown("""
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+html, body, [class*="css"]{
+    font-family:'Inter',sans-serif;
+}
+
+.stApp{
+    background:linear-gradient(135deg,#1E3A8A,#3B82F6);
+}
+
+/* Hide Streamlit Menu */
+
+#MainMenu{visibility:hidden;}
+footer{visibility:hidden;}
+header{visibility:hidden;}
+
+/* Sidebar */
+
+section[data-testid="stSidebar"]{
+    background:#153E90;
+}
+
+section[data-testid="stSidebar"] *{
+    color:white !important;
+}
+
+/* Containers */
+
+div[data-testid="stVerticalBlockBorderWrapper"]{
+    background:rgba(255,255,255,.08);
+    border-radius:18px;
+    border:1px solid rgba(255,255,255,.20);
+    padding:18px;
+}
+
+/* Labels */
+
+h1,h2,h3,h4,h5,h6,label,label p,.stWidgetLabel p{
+    color:white !important;
+}
+
+/* Caption */
+
+.stCaption{
+    color:#E5E7EB !important;
+}
+
+/* Selectbox */
+
+.stSelectbox div[data-baseweb="select"]{
+    background:#1E3A8A !important;
+    border:1px solid #60A5FA;
+    border-radius:10px;
+}
+
+.stSelectbox *{
+    color:white !important;
+}
+
+/* Multiselect */
+
+.stMultiSelect div[data-baseweb="select"]{
+    background:#1E3A8A !important;
+    color:white !important;
+}
+
+/* Radio */
+
+.stRadio *{
+    color:white !important;
+}
+
+/* Slider */
+
+.stSlider *{
+    color:white !important;
+}
+
+/* Text Area */
+
+textarea{
+    background:#1E3A8A !important;
+    color:white !important;
+}
+
+/* Buttons */
+
+.stButton button{
+
+    width:100%;
+
+    background:#2563EB;
+
+    color:white;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    border-radius:12px;
+
+    border:none;
+
+    padding:14px;
+
+}
+
+.stButton button:hover{
+
+    background:#1D4ED8;
+
+}
+
+/* Hero */
+
+.hero{
+
+    background:linear-gradient(135deg,#2563EB,#1E40AF);
+
+    border-radius:20px;
+
+    padding:40px;
+
+    text-align:center;
+
+    color:white;
+
+    box-shadow:0px 12px 30px rgba(0,0,0,.25);
+
+}
+
+.hero h1{
+
+    color:white;
+
+    font-size:50px;
+
+}
+
+.hero h3{
+
+    color:#FCD34D;
+
+}
+
+.hero p{
+
+    color:white;
+
+    font-size:19px;
+
+}
+
+</style>
+""", unsafe_allow_html=True)
+
+# =====================================================
+# SIDEBAR
+# =====================================================
+
+with st.sidebar:
+
+    st.title("🎓 Student Feedback")
+
+    st.markdown("---")
+
+    st.info("""
+### ⏱ Estimated Time
+
+**3 Minutes**
+""")
+
+    st.success("""
+### 🔒 Confidential
+
+Your responses are anonymous and will only be used to improve classroom instruction.
+""")
+
+    st.markdown("---")
+
+    st.markdown("### 👨‍🏫 Teacher")
+    st.write("**Mr. Abraham C. Gaviola**")
+
+    st.markdown("### 📚 Subject")
+    st.write("**English 9**")
+
+    st.markdown("### 🏫 Sections")
+
+    st.write("""
+• Grade 9 – Dayrit
+
+• Grade 9 – Joaquin
+
+• Grade 9 – Dagohoy
+""")
+
+    st.markdown("---")
+
+    st.caption("President Carlos P. Garcia TVSFA")
+    st.caption("Student Feedback System v1.0")
+
+# =====================================================
+# HERO
+# =====================================================
+
+st.markdown("""
+
+<div class="hero">
+
+<h1>🎓 Student Feedback System</h1>
+
+<h3>English 9 Classroom Observation</h3>
+
+<p>
+
+Your honest feedback helps improve classroom instruction.
+
+All responses are kept confidential.
+
+</p>
+
+</div>
+
+""", unsafe_allow_html=True)
+
 # =====================================================
 # STEP 1 OF 4
 # =====================================================
 
 st.write("")
+
 st.progress(25, text="Step 1 of 4 • Class Information")
+
 st.write("")
 
 with st.container(border=True):
 
-    st.subheader("📋 Class Details")
-    st.caption("Please tell us which class you belong to.")
+    st.subheader("📋 Class Information")
 
-    section = st.selectbox(
-        "🏫 Section",
-        [
-            "Select your section",
-            "Grade 9 - Dayrit",
-            "Grade 9 - Joaquin",
-            "Grade 9 - Dagohoy"
-        ]
-    )
+    st.caption("Tell us which class you belong to.")
 
-    term = st.selectbox(
-        "📅 School Term",
-        [
-            "Term 1",
-            "Term 2",
-            "Term 3"
-        ]
-    )
+    col1, col2 = st.columns(2)
 
-    st.info(
-        """
-        **Teacher:** Mr. Abraham C. Gaviola  
-        **Subject:** English 9
-        """
-    )
+    with col1:
+
+        section = st.selectbox(
+
+            "🏫 Section",
+
+            [
+
+                "Select your section",
+
+                "Grade 9 - Dayrit",
+
+                "Grade 9 - Joaquin",
+
+                "Grade 9 - Dagohoy"
+
+            ]
+
+        )
+
+    with col2:
+
+        term = st.selectbox(
+
+            "📅 School Term",
+
+            [
+
+                "Select a term",
+
+                "Term 1",
+
+                "Term 2",
+
+                "Term 3"
+
+            ]
+
+        )
+
+    st.info("""
+
+**Teacher:** Mr. Abraham C. Gaviola
+
+**Subject:** English 9
+
+""")
     # =====================================================
 # STEP 2 OF 4
 # =====================================================
@@ -55,47 +319,43 @@ st.progress(50, text="Step 2 of 4 • Lesson & Classroom Experience")
 st.write("")
 
 # =====================================================
-# LESSON / TOPIC
+# LESSON DISCUSSED
 # =====================================================
 
 with st.container(border=True):
 
     st.subheader("📖 Lesson Discussed")
-    st.caption("Select the lesson discussed during today's class.")
+    st.caption("Select the lesson discussed during today's English class.")
 
-    topic = st.radio(
+    topic = st.selectbox(
 
-        "Which lesson did your teacher discuss today?",
+        "Lesson / Topic",
 
         [
 
-            "Conflict (Character vs. Character, Society, Nature, Self)",
+            "Select today's lesson",
 
-            "Character and Characterization",
+            "Conflict (Character vs. Self, Character, Society, Nature)",
 
-            "Plot and Structural Elements",
+            "Structural Elements (Episodic & Parallel Plot)",
 
-            "Spectacle, Dialogue, and Music",
+            "Dramatic Elements (Spectacle, Dialogue, Music)",
 
-            "Rhyme and Meter",
+            "Film Elements",
 
-            "Diction",
+            "Figures of Speech",
 
-            "Tone and Mood",
+            "Sound Devices",
 
-            "Style",
+            "Rhyme",
 
-            "Patterns and Motifs",
-
-            "Figures of Speech and Sound Devices",
-
-            "Point of View and Narrative Techniques",
-
-            "Organic Unity",
-
-            "Binary Opposition",
+            "Meter",
 
             "Contextual Analysis",
+
+            "Linguistic Context",
+
+            "Psychological Context",
 
             "Core Meaning",
 
@@ -115,44 +375,38 @@ st.write("")
 
 with st.container(border=True):
 
-    st.subheader("💡 Classroom Experience")
-    st.caption("Select all statements that describe your learning experience today.")
+    st.subheader("🌟 Classroom Experience")
+    st.caption("Select all statements that describe your experience during today's lesson.")
 
     best_practices = st.multiselect(
 
-        "🌟 Best Teaching Practices",
+        "Best Teaching Practices",
 
         [
 
             "Explained the lesson clearly",
 
-            "Made difficult ideas easy to understand",
+            "Made the lesson easy to understand",
 
-            "Used examples that were easy to relate to",
+            "Used real-life examples",
 
-            "Asked questions that made us think",
+            "Asked thought-provoking questions",
 
             "Encouraged everyone to participate",
 
             "Used engaging classroom activities",
 
-            "Connected the lesson to real-life situations",
+            "Checked students' understanding",
 
-            "Checked if students understood the lesson",
-
-            "Answered students' questions clearly",
+            "Answered students' questions",
 
             "Provided helpful feedback",
 
-            "Reviewed important points before ending the class",
-
             "Used learning materials effectively",
 
-            "Managed the class well",
+            "Managed the classroom well",
 
-            "Kept students interested throughout the lesson",
-
-            "Created an enjoyable learning experience"
+            "Reviewed important ideas before ending the lesson"
 
         ]
 
@@ -162,13 +416,13 @@ with st.container(border=True):
 
     positive_feedback = st.multiselect(
 
-        "❤️ Positive Teacher Behaviors",
+        "Teacher's Positive Behaviors",
 
         [
 
             "Kind and approachable",
 
-            "Respectful to students",
+            "Respectful",
 
             "Patient",
 
@@ -180,21 +434,15 @@ with st.container(border=True):
 
             "Encourages participation",
 
-            "Supports students who need help",
-
-            "Prepared for the lesson",
+            "Prepared for class",
 
             "Starts class on time",
 
             "Speaks clearly",
 
-            "Shows enthusiasm while teaching",
+            "Shows enthusiasm",
 
-            "Creates a safe classroom environment",
-
-            "Makes students feel comfortable",
-
-            "Shows genuine care for students"
+            "Creates a positive learning environment"
 
         ]
 
@@ -202,11 +450,9 @@ with st.container(border=True):
 
     st.divider()
 
-    st.subheader("😊 Overall Classroom Experience")
-
     quick_rating = st.radio(
 
-        "How would you describe today's class?",
+        "😊 Overall Classroom Experience",
 
         [
 
@@ -227,7 +473,7 @@ with st.container(border=True):
     )
 
     st.info(
-        "💙 Thank you for sharing your honest feedback. Your responses help improve teaching and learning."
+        "💙 Thank you for giving honest feedback. Your responses help improve classroom instruction."
     )
     # =====================================================
 # STEP 3 OF 4
@@ -239,84 +485,100 @@ st.write("")
 
 with st.container(border=True):
 
-    st.subheader("🚀 Suggestions for Improvement")
-    st.caption("Your suggestions will help improve future English classes.")
+    st.subheader("📝 Suggestions and Feedback")
+    st.caption("Help us make future English classes even better.")
 
-    col1, col2 = st.columns(2)
+    # ------------------------------------------
+    # What helped you learn today?
+    # ------------------------------------------
 
-    with col1:
+    helped_learning = st.multiselect(
 
-        suggestions = st.multiselect(
+        "✅ What helped you learn today?",
 
-            "📚 Lesson Improvement",
+        [
 
-            [
+            "Clear explanation",
 
-                "Give more examples",
+            "Examples",
 
-                "Use more group activities",
+            "Group activities",
 
-                "Give more time for activities",
+            "Class discussion",
 
-                "Use more educational games",
+            "Teacher's feedback",
 
-                "Use more videos or multimedia",
+            "Learning materials",
 
-                "Review difficult lessons",
+            "Games or interactive activities",
 
-                "Provide more practice exercises",
+            "Question and answer session",
 
-                "Ask more higher-order thinking questions",
+            "Everything helped"
 
-                "Everything was excellent"
-
-            ]
-
-        )
-
-    with col2:
-
-        teacher_improvement = st.multiselect(
-
-            "👨‍🏫 Teacher Improvement",
-
-            [
-
-                "Speak more slowly",
-
-                "Speak louder and clearer",
-
-                "Give everyone a chance to participate",
-
-                "Provide more feedback",
-
-                "Walk around the classroom more often",
-
-                "Encourage shy students",
-
-                "Continue the excellent teaching"
-
-            ]
-
-        )
-
-    st.divider()
-
-    comments = st.text_area(
-
-        "💬 Additional Comments",
-
-        placeholder="Write your comments or suggestions here (optional)...",
-
-        height=120
+        ]
 
     )
 
     st.divider()
 
+    # ------------------------------------------
+    # What would improve future lessons?
+    # ------------------------------------------
+
+    improvement = st.multiselect(
+
+        "💡 What would improve future lessons?",
+
+        [
+
+            "More examples",
+
+            "More group activities",
+
+            "More educational games",
+
+            "More videos",
+
+            "More practice exercises",
+
+            "More time for activities",
+
+            "More class discussions",
+
+            "More review before quizzes",
+
+            "Nothing. The lesson was excellent."
+
+        ]
+
+    )
+
+    st.divider()
+
+    # ------------------------------------------
+    # Comments
+    # ------------------------------------------
+
+    comments = st.text_area(
+
+        "💬 Additional Comments",
+
+        placeholder="Share any comments, suggestions, or appreciation for today's lesson (optional).",
+
+        height=150
+
+    )
+
+    st.divider()
+
+    # ------------------------------------------
+    # Overall Rating
+    # ------------------------------------------
+
     overall_rating = st.slider(
 
-        "⭐ Overall Rating for Today's Lesson",
+        "⭐ Overall Rating",
 
         min_value=1,
 
@@ -324,8 +586,12 @@ with st.container(border=True):
 
         value=5,
 
-        help="1 = Poor   |   5 = Excellent"
+        help="1 = Poor | 5 = Excellent"
 
+    )
+
+    st.success(
+        "👏 Thank you! Your feedback helps improve the quality of teaching and learning."
     )
     # =====================================================
 # STEP 4 OF 4
@@ -335,7 +601,9 @@ st.write("")
 st.progress(100, text="Step 4 of 4 • Submit Feedback")
 st.write("")
 
-st.info("📩 Please review your answers before submitting.")
+st.info(
+    "📩 Please review your responses before clicking **Submit Feedback**."
+)
 
 submit = st.button(
     "📨 Submit Feedback",
@@ -345,9 +613,9 @@ submit = st.button(
 
 if submit:
 
-    # -------------------------
+    # =====================================================
     # VALIDATION
-    # -------------------------
+    # =====================================================
 
     if section == "Select your section":
         st.error("Please select your section.")
@@ -357,68 +625,88 @@ if submit:
         st.error("Please select the school term.")
         st.stop()
 
-    if topic is None:
-        st.error("Please select the lesson discussed.")
+    if topic == "Select today's lesson":
+        st.error("Please select the lesson discussed today.")
         st.stop()
 
-    # -------------------------
+    # =====================================================
     # DATA TO SEND
-    # -------------------------
+    # =====================================================
 
     data = {
 
-        "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "Timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
 
-        "teacher": "Mr. Abraham C. Gaviola",
+        "Teacher": "Mr. Abraham C. Gaviola",
 
-        "subject": "English 9",
+        "Subject": "English 9",
 
-        "section": section,
+        "Section": section,
 
-        "term": term,
+        "Term": term,
 
-        "topic": topic,
+        "Lesson": topic,
 
-        "best_practices": ", ".join(best_practices),
+        "Best Teaching Practices": ", ".join(best_practices),
 
-        "positive_behaviors": ", ".join(positive_feedback),
+        "Positive Teacher Behaviors": ", ".join(positive_feedback),
 
-        "class_experience": quick_rating,
+        "Class Experience": quick_rating,
 
-        "lesson_suggestions": ", ".join(suggestions),
+        "Helped Learning": ", ".join(helped_learning),
 
-        "teacher_suggestions": ", ".join(teacher_improvement),
+        "Suggested Improvements": ", ".join(improvement),
 
-        "comments": comments,
+        "Comments": comments,
 
-        "overall_rating": overall_rating
+        "Overall Rating": overall_rating
 
     }
 
-    # -------------------------
-    # SEND TO GOOGLE SHEETS
-    # -------------------------
+    # =====================================================
+    # GOOGLE APPS SCRIPT URL
+    # =====================================================
 
-    WEB_APP_URL = "YOUR_WEB_APP_URL_HERE"
+    WEB_APP_URL = "YOUR_WEB_APP_URL"
 
-    try:
+    # =====================================================
+    # SEND DATA
+    # =====================================================
 
-        response = requests.post(
-            WEB_APP_URL,
-            json=data,
-            timeout=15
-        )
+    with st.spinner("Submitting your feedback..."):
 
-        if response.status_code == 200:
+        try:
 
-            st.success("✅ Thank you! Your feedback has been submitted successfully.")
+            response = requests.post(
+                WEB_APP_URL,
+                json=data,
+                timeout=20
+            )
 
-            st.balloons()
+            if response.status_code == 200:
 
-        else:
+                st.balloons()
 
-            st.error("❌ Unable to submit your feedback. Please try again later.")
+                st.success("""
+### ✅ Feedback Submitted!
 
-    except Exception as e:
+Thank you for taking the time to complete the evaluation.
 
-        st.error(f"⚠️ Connection Error: {e}")
+Your responses have been recorded successfully.
+""")
+
+            else:
+
+                st.error(
+                    f"Submission failed (Status Code: {response.status_code})."
+                )
+
+        except requests.exceptions.Timeout:
+
+            st.error(
+                "The request timed out. Please check your internet connection and try again."
+            )
+
+        except Exception as e:
+
+            st.error(f"An unexpected error occurred: {e}")
