@@ -31,10 +31,9 @@ html, body, [class*="css"]{
 
     font-family:'Inter',sans-serif;
 
-}
+
 .stApp {
     background: linear-gradient(135deg, #1E3A8A, #3B82F6);
-}
 }
 div[data-testid="stSidebarUserContent"], .stBorderedContainer {
     background-color: rgba(255, 255, 255, 0.1) !important;
@@ -48,21 +47,11 @@ visibility:hidden;
 }
 
 /* Crisp, extra-large headings and input labels */
+/* Force all headings and input labels to be large and white */
 h1, h2, h3, h4, h5, h6, label, label p, .stWidgetLabel p {
     color: #FFFFFF !important;
-    font-size: 26px !important;
-    font-weight: 700 !important;
-}
-    font-size: 17px !important;
+    font-size: 22px !important;
     font-weight: 600 !important;
-}
-
-    color:#1E293B !important;
-
-    font-size:17px !important;
-
-    font-weight:600 !important;
-
 }
 
 label p{
