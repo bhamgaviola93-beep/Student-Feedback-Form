@@ -62,7 +62,7 @@ h1,h2,h3,h4,h5,h6,label,label p,.stWidgetLabel p{
 }
 
 /* Selectbox */
-.stSelectbox div[data-baseweb="select"]{
+.stScientificBox div[data-baseweb="select"], .stSelectbox div[data-baseweb="select"]{
     background:#1E3A8A !important;
     border:1px solid #60A5FA;
     border-radius:10px;
@@ -424,7 +424,7 @@ if submit:
         "Term": term,
         "Lesson": topic,
         "Best Teaching Practices": ", ".join(best_practices),
-        "Positive Teacher Behaviors": ", ".join(positive_feedback),
+        "Teacher's Positive Behaviors": ", ".join(positive_feedback),
         "Class Experience": quick_rating,
         "Helped Learning": ", ".join(helped_learning),
         "Suggested Improvements": ", ".join(improvement),
