@@ -1,3 +1,13 @@
+import streamlit as st
+import requests
+from datetime import datetime
+
+st.set_page_config(
+    page_title="Student Feedback System",
+    page_icon="🎓",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
 # =====================================================
 # STEP 1 OF 4
 # =====================================================
